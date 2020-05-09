@@ -7,7 +7,8 @@ const blackSquareGrey = '#696969';
 let count;
 const ORIGINAL_DEPTH = 3;
 const BOARD_SIDE = 8;
-
+const MAX = 9999;
+const MIN = -9999;
 
 function removeGreySquares () {
   $('#chessboard .square-55d63').css('background', '')
@@ -50,7 +51,12 @@ function onDrop (source, target) {
   if (move === null)
     return 'snapback';
 
-  window.setTimeout(mm_best_move, 250)
+  const algorithm = $("input[name=algorithm]:checked").attr('id');
+
+  if(algorithm === 'minimax')
+    window.setTimeout(mm_best_move, 250);
+  else if(algorithm === 'alpha-beta-prunning')
+    window.setTimeout(ab_best_move, 250);
 }
 
 function onMouseoverSquare (square, piece) {
@@ -119,8 +125,6 @@ let get_piece_value =  function(piece){
   }
   return 0;
 };
-
-//
 
 const config = {
   draggable: true,
